@@ -1,6 +1,6 @@
 const { query } = require('../db');
 
-const IMG_PATH = 'http://localhost:3001/api/image/';
+const IMG_PATH = `${process.env.BACKEND_URL || 'http://localhost:3001'}/api/image/`;
 
 const formatImage = image => IMG_PATH + image;
 

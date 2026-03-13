@@ -1,6 +1,6 @@
 import qs from 'qs'
 
-const BASE_URL = 'http://localhost:3001/api/'
+const BASE_URL = (process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3001').replace(/\/$/, '') + '/api/'
 
 const serializeParams = (params: any) =>
   qs.stringify(params, { arrayFormat: 'repeat' })
