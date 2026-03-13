@@ -3,7 +3,7 @@ const cors = require('cors');
 const os = require('os');
 const path = require('path');
 require('dotenv').config({
-  path: path.resolve(__dirname, '..', '..', '.env'),
+  path: path.resolve(__dirname, '..', '.env'),
 });
 
 const { pool } = require('./db');
@@ -20,10 +20,12 @@ app.use(
   }),
 );
 
+const UPLOADS_PATH = process.env.UPLOADS_PATH || path.join(__dirname, '..', 'uploads');
+
 // static images (keeps existing URL structure)
 app.get('/api/image/*', (req, res) => {
   const img = req.params[0];
-  const imagePath = path.join(__dirname, '..', 'uploads', 'images', img);
+  const imagePath = path.resolve(UPLOADS_PATH, 'images', img);
   res.sendFile(imagePath, err => {
     if (err) {
       console.error('Error sending file:', err);
