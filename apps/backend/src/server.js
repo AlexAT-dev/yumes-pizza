@@ -8,6 +8,7 @@ require('dotenv').config({
 
 const { pool } = require('./db');
 const apiRouter = require('./routes');
+const uploadRoutes = require('./routes/uploadRoutes');
 
 const app = express();
 app.use(express.json());
@@ -36,6 +37,7 @@ app.get('/api/image/*', (req, res) => {
 
 // mount API routes
 app.use('/api', apiRouter);
+app.use('/api', uploadRoutes);
 
 const PORT = Number(process.env.PORT) || 3001;
 
