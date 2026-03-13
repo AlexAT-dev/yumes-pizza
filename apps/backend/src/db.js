@@ -1,21 +1,19 @@
-
-// const pool = new Pool({
-//   host: process.env.PG_HOST || 'localhost',
-//   port: Number(process.env.PG_PORT) || 5432,
-//   user: process.env.PG_USER || 'postgres',
-//   password: process.env.PG_PASSWORD || 'postgres',
-//   database: process.env.PG_DATABASE || 'yumes',
-// });
-
 const { Pool } = require('pg');
 const path = require('path');
 require('dotenv').config({
-  path: path.resolve(__dirname, '..', '..', '.env'),
+  path: path.resolve(__dirname, '..', '.env'),
 });
+
+const isProduction = process.env.NODE_ENV === 'production';
+
+if (!process.env.DATABASE_URL) {
+  console.error('DATABASE_URL is not defined in .env!');
+  process.exit(1);
+}
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false },
+  ssl: isProduction ? { rejectUnauthorized: false } : false, // автоматично SSL лише на продакшені
 });
 
 pool.on('error', err => {
