@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  color-scheme: light;
+}
+
+@theme inline {
+  /* colors */
+  --color-dark_gray: #404040;
+  --color-dark_red: #DE4C4C;
+  --color-darked_red: #9B3636;
+  --color-light_gray: #D9D9D9;
+  --color-thin_gray: #B3B3B3;
+  --color-white: #FFF;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* font families */
+  --font-family-lato: Lato, sans-serif;
+  --font-family-sans: var(--font-geist-sans);
+  --font-family-mono: var(--font-geist-mono);
+
+  /* shadows */
+  --shadow-md: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  --shadow-sm-red: 0px 2px 4px #9B3636;
+  --shadow-md-red: 0px 4px 4px #9B3636;
+}
+
+/* custom font sizes using Tailwind utilities */
+@layer utilities {
+  .text-caption-small {
+    @apply text-[12px] leading-[16px];
+  }
+  .text-caption {
+    @apply text-[14px] leading-[18px];
+  }
+  .text-description {
+    @apply text-[16px] leading-[20px];
+  }
+  .text-heading-6 {
+    @apply text-[18px] leading-[22px];
+  }
+  .text-heading-5 {
+    @apply text-[20px] leading-[24px];
+  }
+  .text-heading-4 {
+    @apply text-[22px] leading-[26px];
+  }
+  .text-heading-3 {
+    @apply text-[24px] leading-[28px];
+  }
+  .text-heading-2 {
+    @apply text-[28px] leading-[32px];
+  }
+  .text-heading-1 {
+    @apply text-[32px] leading-[36px];
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
