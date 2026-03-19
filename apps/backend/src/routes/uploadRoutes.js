@@ -10,7 +10,7 @@ const router = express.Router();
 // Railway: volume змонтований на /uploads
 // Локально: папка uploads поруч з коренем проєкту
 const isRailway = !!process.env.RAILWAY_STATIC_URL;
-const UPLOADS_PATH = process.env.UPLOADS_PATH || (isRailway ? '/uploads' : path.join(__dirname, '..', '..', 'uploads'));
+const UPLOADS_PATH = isRailway ? '/uploads' : path.join(__dirname, '..', '..', 'uploads');
 const imagesDir = path.join(UPLOADS_PATH, 'images');
 
 // Створюємо папку, якщо її ще немає
