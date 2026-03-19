@@ -27,17 +27,30 @@ app.use(
 
 console.log(`CORS configured to allow origin: ${FRONTEND_ORIGINS.join(', ')}`);
 
-const UPLOADS_PATH = process.env.UPLOADS_PATH || path.join(__dirname, '..', 'uploads');
+const isRailway = !!process.env.RAILWAY_ENVIRONMENT_ID;
+const UPLOADS_PATH = isRailway ? '/uploads' : path.join(__dirname, '..', 'uploads');
+const imagesDir = path.join(UPLOADS_PATH, 'images');
 
-// static images (keeps existing URL structure)
-app.get('/api/image/*', (req, res) => {
-  const img = req.params[0];
-  const imagePath = path.resolve(UPLOADS_PATH, 'images', img);
-  res.sendFile(imagePath, err => {
+if (!fs.existsSync(imagesDir)) {
+  fs.mkdirSync(imagesDir, { recursive: true });
+}
+
+app.get('/api/image/:filename', (req, res) => {
+  const filename = req.params.filename;
+  const imagePath = path.join(imagesDir, filename);
+
+  fs.access(imagePath, fs.constants.F_OK, (err) => {
     if (err) {
-      console.error('Error sending file:', err);
-      res.status(err.status || 500).end();
+      console.error('File not found:', imagePath);
+      return res.status(404).send('Файл не знайдено');
     }
+
+    res.sendFile(imagePath, (err) => {
+      if (err) {
+        console.error('Error sending file:', err);
+        res.status(err.status || 500).end();
+      }
+    });
   });
 });
 
