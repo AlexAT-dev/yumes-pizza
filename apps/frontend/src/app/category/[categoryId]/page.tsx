@@ -24,13 +24,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default async function CategoryPage({ params }) {
+export default async function CategoryPage({ params }: Props) {
+  const { categoryId } = await params
+  
   const groupedProducts = await getGroupedProducts()
 
   return (
     <CategoryPageClient
       groupedProducts={groupedProducts}
-      categoryId={params.categoryId}
+      categoryId={categoryId}
     />
   )
 }
