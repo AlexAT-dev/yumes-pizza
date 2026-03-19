@@ -10,9 +10,9 @@
 ---
 
 ## Команда:
-- Атвіновський Олексій: devops, teamlead
-- Довгаль Кирило: frontend dev
-- Оршовський Сергій: backend dev
+- Атвіновський Олексій: DevOps, TeamLead
+- Довгаль Кирило: Frontend Dev
+- Оршовський Сергій: Backend Dev
 
 ## Завдання
 
@@ -45,6 +45,10 @@ npm run dev
 
 - Backend: https://yumes-pizza-backend-production.up.railway.app/
 - Frontend: https://yumes-pizza-frontend-production.up.railway.app/
+
+Результат деплою:
+![alt text](screenshots/railway-deploy.png)
+
 ---
 
 ### 3. Реєстрація домену
@@ -103,6 +107,8 @@ site:your-project.railway.app
 ```
 
 Зафіксувати - чи знайдено сайт, як виглядає сніпет
+
+![alt text](screenshots/not-found.png)
 
 ---
 
