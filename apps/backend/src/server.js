@@ -25,7 +25,7 @@ app.use(
   }),
 );
 
-console.log(`CORS configured to allow origin: ${FRONTEND_ORIGIN}`);
+console.log(`CORS configured to allow origin: ${FRONTEND_ORIGINS.join(', ')}`);
 
 const UPLOADS_PATH = process.env.UPLOADS_PATH || path.join(__dirname, '..', 'uploads');
 
