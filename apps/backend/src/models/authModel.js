@@ -9,15 +9,15 @@ async function findClientByEmail(email) {
 
 async function createClient({ id, name, phone, email, password }) {
   await query(
-    'INSERT INTO Clients (id, name, phone, email, password) VALUES ($1, $2, $3, $4, $5)',
-    [id, name, phone, email, password],
+    'INSERT INTO Clients (id, name, phone, email, password, is_admin) VALUES ($1, $2, $3, $4, $5, $6)',
+    [id, name, phone, email, password, false],
   );
 }
 
-async function findClientByCredentials(email, password) {
+async function findClientByEmailWithPassword(email) {
   const result = await query(
-    'SELECT * FROM Clients WHERE email = $1 AND password = $2',
-    [email, password],
+    'SELECT * FROM Clients WHERE email = $1',
+    [email],
   );
   return result.rows[0] || null;
 }
@@ -25,6 +25,6 @@ async function findClientByCredentials(email, password) {
 module.exports = {
   findClientByEmail,
   createClient,
-  findClientByCredentials,
+  findClientByEmailWithPassword,
 };
 
