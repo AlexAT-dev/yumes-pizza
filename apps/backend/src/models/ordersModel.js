@@ -119,8 +119,51 @@ async function getOrdersByClient(id_client) {
   }, []);
 }
 
+async function getOrderById(id) {
+  const { rows } = await query(
+    `SELECT o.id,
+            o.date,
+            o.totalPrice,
+            op.id_product,
+            op.amount,
+            op.price,
+            p.name,
+            p.image
+     FROM Orders AS o
+     JOIN OrderProducts AS op ON op.id_order = o.id
+     JOIN Products AS p ON p.id = op.id_product
+     WHERE o.id = $1`,
+    [id],
+  );
+
+  if (!rows.length) return null;
+
+  return rows.reduce((acc, row) => {
+    const product = {
+      id: row.id_product,
+      name: row.name,
+      image: formatImage(row.image),
+      count: row.amount,
+      price: row.price,
+    };
+
+    if (!acc) {
+      return {
+        id: row.id,
+        date: row.date,
+        products: [product],
+        totalPrice: row.totalprice ?? row.totalPrice,
+      };
+    }
+
+    acc.products.push(product);
+    return acc;
+  }, null);
+}
+
 module.exports = {
   createOrderWithTransaction,
   getOrdersByClient,
+  getOrderById,
 };
 

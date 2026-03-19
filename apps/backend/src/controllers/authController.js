@@ -1,5 +1,22 @@
 const { v4: uuidv4 } = require('uuid');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const authModel = require('../models/authModel');
+
+const JWT_SECRET = process.env.JWT_SECRET || 'change-me-in-env';
+const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
+
+function signToken(user) {
+  return jwt.sign(
+    {
+      sub: user.id,
+      email: user.email,
+      isAdmin: Boolean(user.is_admin),
+    },
+    JWT_SECRET,
+    { expiresIn: JWT_EXPIRES_IN },
+  );
+}
 
 async function registerUser(req, res) {
   const { name, phone, email, password } = req.body;
@@ -13,7 +30,8 @@ async function registerUser(req, res) {
     }
 
     const id = uuidv4();
-    await authModel.createClient({ id, name, phone, email, password });
+    const hash = await bcrypt.hash(password, 10);
+    await authModel.createClient({ id, name, phone, email, password: hash });
 
     res
       .status(200)
@@ -30,21 +48,35 @@ async function loginUser(req, res) {
   const { email, password } = req.body;
 
   try {
-    const user = await authModel.findClientByCredentials(email, password);
+    const user = await authModel.findClientByEmailWithPassword(email);
     if (!user) {
       return res
         .status(401)
         .json({ success: false, message: 'Invalid email or password' });
     }
 
+    // Backward compatible login for older non-hashed records.
+    const isHashValid = await bcrypt.compare(password, user.password).catch(
+      () => false,
+    );
+    const isLegacyPlainPassword = user.password === password;
+    if (!isHashValid && !isLegacyPlainPassword) {
+      return res
+        .status(401)
+        .json({ success: false, message: 'Invalid email or password' });
+    }
+
+    const token = signToken(user);
     res.status(200).json({
       success: true,
       message: 'Login successful',
+      token,
       user: {
         id: user.id,
         name: user.name,
         phone: user.phone,
         email: user.email,
+        isAdmin: Boolean(user.is_admin),
         address: {
           street: user.street,
           building: user.building,

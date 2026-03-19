@@ -2,6 +2,8 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const { authenticate } = require('../middleware/auth');
+const { requireAdmin } = require('../middleware/requireAdmin');
 
 const router = express.Router();
 
@@ -27,6 +29,27 @@ router.post('/upload', upload.single('image'), (req, res) => {
     file: { originalName: req.file.originalname, storedName: req.file.filename, path: `/api/image/${req.file.filename}` },
   });
 });
+
+router.post(
+  '/admin/upload',
+  authenticate,
+  requireAdmin,
+  upload.single('image'),
+  (req, res) => {
+    if (!req.file) {
+      return res.status(400).json({
+        error: { code: 'BAD_REQUEST', message: 'Файл не завантажено.' },
+      });
+    }
+    return res.json({
+      data: {
+        originalName: req.file.originalname,
+        storedName: req.file.filename,
+        path: `/api/image/${req.file.filename}`,
+      },
+    });
+  },
+);
 
 router.post('/upload-multiple', upload.array('images', 50), (req, res) => {
   if (!req.files || req.files.length === 0) return res.status(400).send('Файли не завантажено.');

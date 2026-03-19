@@ -27,7 +27,23 @@ async function createAddress(req, res) {
   }
 }
 
+async function getAddressByOrderId(req, res) {
+  try {
+    const address = await addressModel.getAddressByOrderId(req.params.id_order);
+    if (!address) {
+      return res.status(404).json({
+        error: { code: 'NOT_FOUND', message: 'Address not found' },
+      });
+    }
+    return res.status(200).json(address);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send(err.message);
+  }
+}
+
 module.exports = {
   createAddress,
+  getAddressByOrderId,
 };
 
