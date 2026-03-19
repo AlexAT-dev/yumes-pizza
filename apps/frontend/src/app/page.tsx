@@ -4,30 +4,9 @@ import { getNews } from '@/common/api/resources/news/actions';
 import { getGroupedProducts } from '@/common/api/resources/groupedProducts/actions';
 
 export const metadata: Metadata = {
-  title: "Доставка їжі у Чернівцях — піца, бургери, суші | Yumes",
+  title: "Головна | Yumes",
   description:
     "Yumes — доставка їжі у Чернівцях. Замовляйте піцу, бургери, суші та інші страви з швидкою доставкою додому або в офіс.",
-
-  alternates: {
-    canonical: "https://yumes-pizza.pp.ua/",
-  },
-
-  openGraph: {
-    title: "Доставка їжі у Чернівцях | Yumes",
-    description:
-      "Замовляйте піцу, бургери, суші та інші страви з доставкою у Чернівцях від Yumes.",
-    url: "https://yumes-pizza.pp.ua/",
-    siteName: "Yumes",
-    type: "website",
-    locale: "uk_UA",
-  },
-
-  twitter: {
-    card: "summary_large_image",
-    title: "Доставка їжі у Чернівцях | Yumes",
-    description:
-      "Піца, бургери, суші та інші страви з доставкою у Чернівцях.",
-  },
 };
 
 const  HomePage = async() => {
