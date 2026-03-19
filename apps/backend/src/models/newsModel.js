@@ -10,7 +10,14 @@ async function getAllNews() {
   return formatNewsImage(rows);
 }
 
+async function getNewsById(id) {
+  const { rows } = await query('SELECT * FROM News WHERE id = $1', [id]);
+  if (!rows[0]) return null;
+  return formatNewsImage(rows)[0];
+}
+
 module.exports = {
   getAllNews,
+  getNewsById,
 };
 

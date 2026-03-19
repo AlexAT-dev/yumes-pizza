@@ -5,6 +5,11 @@ async function getAll() {
   return rows;
 }
 
+async function getById(id) {
+  const { rows } = await query('SELECT * FROM Categories WHERE id = $1', [id]);
+  return rows[0] || null;
+}
+
 async function create(category) {
   const { rows } = await query(
     'INSERT INTO Categories (id, name) VALUES ($1, $2) RETURNING *',
@@ -31,6 +36,7 @@ async function removeById(id) {
 
 module.exports = {
   getAll,
+  getById,
   create,
   updateById,
   removeById,

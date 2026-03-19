@@ -12,6 +12,23 @@ async function getAllCategories(req, res) {
   }
 }
 
+async function getCategoryById(req, res) {
+  try {
+    const data = await model.getById(req.params.id);
+    if (!data) {
+      return res.status(404).json({
+        error: { code: 'NOT_FOUND', message: 'Category not found' },
+      });
+    }
+    return res.json({ data });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      error: { code: 'INTERNAL_ERROR', message: 'Failed to fetch category' },
+    });
+  }
+}
+
 async function createCategory(req, res) {
   try {
     const data = await model.create(req.body);
@@ -60,6 +77,7 @@ async function deleteCategory(req, res) {
 
 module.exports = {
   getAllCategories,
+  getCategoryById,
   createCategory,
   updateCategory,
   deleteCategory,

@@ -5,6 +5,11 @@ async function getAll() {
   return rows;
 }
 
+async function getById(id) {
+  const { rows } = await query('SELECT * FROM News WHERE id = $1', [id]);
+  return rows[0] || null;
+}
+
 async function create(news) {
   const { rows } = await query(
     'INSERT INTO News (id, image, title) VALUES ($1, $2, $3) RETURNING *',
@@ -32,6 +37,7 @@ async function removeById(id) {
 
 module.exports = {
   getAll,
+  getById,
   create,
   updateById,
   removeById,

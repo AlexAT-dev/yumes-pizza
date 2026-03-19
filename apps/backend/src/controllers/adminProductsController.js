@@ -13,6 +13,23 @@ async function getAllProducts(req, res) {
   }
 }
 
+async function getProductById(req, res) {
+  try {
+    const data = await model.getById(req.params.id);
+    if (!data) {
+      return res.status(404).json({
+        error: { code: 'NOT_FOUND', message: 'Product not found' },
+      });
+    }
+    return res.json({ data });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      error: { code: 'INTERNAL_ERROR', message: 'Failed to fetch product' },
+    });
+  }
+}
+
 async function createProduct(req, res) {
   try {
     const payload = { ...req.body, id: req.body.id || uuidv4() };
@@ -62,6 +79,7 @@ async function deleteProduct(req, res) {
 
 module.exports = {
   getAllProducts,
+  getProductById,
   createProduct,
   updateProduct,
   deleteProduct,

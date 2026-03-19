@@ -31,8 +31,24 @@ async function getOrders(req, res) {
   }
 }
 
+async function getOrderById(req, res) {
+  try {
+    const order = await ordersModel.getOrderById(req.params.id);
+    if (!order) {
+      return res.status(404).json({
+        error: { code: 'NOT_FOUND', message: 'Order not found' },
+      });
+    }
+    return res.status(200).json(order);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json([]);
+  }
+}
+
 module.exports = {
   createOrder,
   getOrders,
+  getOrderById,
 };
 

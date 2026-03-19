@@ -24,6 +24,17 @@ async function getAllProducts() {
   return rows.map(formatProduct);
 }
 
+async function getProductById(id) {
+  const { rows } = await query(
+    `SELECT *, ROUND(price - (price * COALESCE(discount, 0) / 100), 2) AS selling
+     FROM Products
+     WHERE id = $1`,
+    [id],
+  );
+  if (!rows[0]) return null;
+  return formatProduct(rows[0]);
+}
+
 async function getGroupedProducts() {
   const { rows } = await query(
     `SELECT c.name AS category_name,
@@ -52,6 +63,7 @@ async function getGroupedProducts() {
 
 module.exports = {
   getAllProducts,
+  getProductById,
   getGroupedProducts,
 };
 
