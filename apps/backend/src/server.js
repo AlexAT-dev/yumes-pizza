@@ -13,13 +13,15 @@ const uploadRoutes = require('./routes/uploadRoutes');
 const app = express();
 app.use(express.json());
 
-const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || 'TEST';
+const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || 'http://localhost:3000';
 app.use(
   cors({
     origin: FRONTEND_ORIGIN,
     credentials: true,
   }),
 );
+
+console.log(`CORS configured to allow origin: ${FRONTEND_ORIGIN}`);
 
 const UPLOADS_PATH = process.env.UPLOADS_PATH || path.join(__dirname, '..', 'uploads');
 
