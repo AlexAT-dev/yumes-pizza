@@ -1,14 +1,14 @@
 -- Seed data for PostgreSQL (News, Categories, Products)
 
 INSERT INTO News (id, image, title) VALUES
-('1', 'news/1.jpg', 'Заголовок 1'),
-('2', 'news/2.jpg', 'Заголовок 2'),
-('3', 'news/3.jpg', 'Заголовок 3'),
-('4', 'news/4.jpg', 'Заголовок 4'),
-('5', 'news/5.jpg', 'Заголовок 5'),
-('6', 'news/6.jpg', 'Заголовок 6'),
-('7', 'news/7.jpg', 'Заголовок 7'),
-('8', 'news/8.jpg', 'Заголовок 8');
+('1', 'news_1.jpg', 'Заголовок 1'),
+('2', 'news_2.jpg', 'Заголовок 2'),
+('3', 'news_3.jpg', 'Заголовок 3'),
+('4', 'news_4.jpg', 'Заголовок 4'),
+('5', 'news_5.jpg', 'Заголовок 5'),
+('6', 'news_6.jpg', 'Заголовок 6'),
+('7', 'news_7.jpg', 'Заголовок 7'),
+('8', 'news_8.jpg', 'Заголовок 8');
 
 INSERT INTO Categories (id, name) VALUES
 ('pizza', 'Піца'),

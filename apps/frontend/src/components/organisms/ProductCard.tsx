@@ -49,7 +49,7 @@ const ProductCard = ({
         />
         <CountButton
           count={count}
-          label="I want"
+          label="Додати у кошик"
           onAdd={onAdd}
           onSub={onSub}
           countMax={stock}

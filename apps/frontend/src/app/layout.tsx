@@ -17,6 +17,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Yumes Pizza - найсмачніша піца у Чернівцях",
   description: "Найсмачніша піца у Чернівцях від Yumes Pizza. Замовляйте онлайн та насолоджуйтеся свіжою, ароматною піцою з доставкою прямо до вашого дому. Виберіть свою улюблену піцу та отримайте її швидко та смачно!",
+  verification: {
+    google: "LQ9NAxnNRG8aTTGrYyZf21GCQf1Pcgm7nR5AF1OEIOI",
+  },
 };
 
 export default function RootLayout({

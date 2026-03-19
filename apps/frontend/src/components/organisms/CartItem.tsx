@@ -49,7 +49,7 @@ const CartItem = ({
         />
         <CountButton
           count={count}
-          label="I want"
+          label="Додати у кошик"
           onAdd={() => onAdd?.(id)}
           onSub={() => onSub?.(id)}
           countMax={stock}
