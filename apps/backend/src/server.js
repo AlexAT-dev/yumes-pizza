@@ -13,7 +13,7 @@ const uploadRoutes = require('./routes/uploadRoutes');
 const app = express();
 app.use(express.json());
 
-const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || 'http://localhost:3000';
+const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || 'TEST';
 app.use(
   cors({
     origin: FRONTEND_ORIGIN,
