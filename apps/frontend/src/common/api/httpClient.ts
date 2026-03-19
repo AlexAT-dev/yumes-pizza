@@ -33,6 +33,7 @@ async function request<T>(
   const res = await fetch(url, {
     method,
     credentials: 'include',
+    next: { revalidate: 60 },
     headers: {
       'Content-Type': 'application/json',
       ...headers,

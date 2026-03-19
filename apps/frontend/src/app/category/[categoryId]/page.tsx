@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import type { CategoryRouteParams } from '@constants/routes'
 import CategoryPageClient from './CategoryPageClient'
+import { getGroupedProducts } from '@/common/api/resources/groupedProducts/actions'
 
 type Props = {
   params: CategoryRouteParams
@@ -23,6 +24,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default function CategoryPage() {
-  return <CategoryPageClient />
+export default async function CategoryPage({ params }) {
+  const groupedProducts = await getGroupedProducts()
+
+  return (
+    <CategoryPageClient
+      groupedProducts={groupedProducts}
+      categoryId={params.categoryId}
+    />
+  )
 }

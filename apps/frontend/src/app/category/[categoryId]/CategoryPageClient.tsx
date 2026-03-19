@@ -1,47 +1,46 @@
 'use client'
 
-import { useGroupedProductsQuery } from '@api'
 import { ProductList } from '@components/organisms'
-import type { Product } from '@models/products'
-import { NAVIGATION_ROUTES, type CategoryRouteParams } from '@constants/routes'
+import type { Product, GroupedProducts } from '@models/products'
+import { NAVIGATION_ROUTES } from '@constants/routes'
 import { addProduct, subProduct } from '@stores/features/cartSlice'
 import { useStoreDispatch, useStoreSelector } from '@stores/store'
 import { useEffect, useMemo } from 'react'
-import { useRouter, useParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
-const CategoryPageClient = () => {
+type Props = {
+  groupedProducts: GroupedProducts[]
+  categoryId: string
+}
+
+const CategoryPageClient = ({ groupedProducts, categoryId }: Props) => {
   const router = useRouter()
-  const { categoryId } = useParams() as CategoryRouteParams
 
   const dispatch = useStoreDispatch()
   const cartProducts = useStoreSelector(state => state.cart.products)
 
-  const groupedProductsQuery = useGroupedProductsQuery()
-
-  const products = useMemo(() => {
-    const category = groupedProductsQuery.groupedProducts.find(
-      category => category.id === categoryId,
-    )
-
-    return category ?? null
-  }, [categoryId, groupedProductsQuery.groupedProducts])
+  const category = useMemo(() => {
+    return groupedProducts.find(c => c.id === categoryId) ?? null
+  }, [groupedProducts, categoryId])
 
   useEffect(() => {
     if (!categoryId) {
       router.replace(NAVIGATION_ROUTES.home)
       return
     }
-    if (groupedProductsQuery.groupedProducts.length > 0 && !products) {
+
+    if (groupedProducts.length > 0 && !category) {
       router.replace(NAVIGATION_ROUTES.home)
     }
-  }, [categoryId, products, groupedProductsQuery.groupedProducts, router])
+  }, [categoryId, category, groupedProducts, router])
 
-  if (!categoryId || !products) {
+  if (!categoryId || !category) {
     return null
   }
 
-  const navigateToCategory = (id: string) =>
+  const navigateToCategory = (id: string) => {
     router.push(NAVIGATION_ROUTES.category(id))
+  }
 
   const onAddProduct = (product: Product) => {
     dispatch(addProduct({ product }))
@@ -53,7 +52,7 @@ const CategoryPageClient = () => {
 
   return (
     <ProductList
-      data={[products]}
+      data={[category]}
       selectedData={cartProducts}
       onPressMore={navigateToCategory}
       onAddProduct={onAddProduct}
