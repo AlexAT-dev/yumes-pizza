@@ -6,7 +6,7 @@ export type BadgeProps = Pick<AllHTMLAttributes<HTMLElement>, 'className'> & {
 }
 
 export const badgeStyle: ClassNameValue = [
-  'w-4 h-4 text-caption_small text-center text-white font-bold bg-dark_red rounded-full shadow-sm-red',
+  'w-4 h-4 text-[10px] text-center text-white font-bold bg-dark_red rounded-full shadow-sm-red',
 ]
 
 const Badge = ({ count, className }: BadgeProps) => (

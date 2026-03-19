@@ -29,17 +29,6 @@ import { useStoreDispatch, useStoreSelector } from '@stores/store'
 import { useRouter } from 'next/navigation'
 import CartEmptyPage from '@components/templates/CartEmptyPage'
 
-// export const metadata: Metadata = {
-//   title: "Кошик - Yumes",
-//   description: "Перегляньте та підтвердіть ваше замовлення в кошику. Завершіть покупку з доставкою від Yumes.",
-//   keywords: ["кошик", "замовлення", "покупка", "доставка", "Yumes"],
-//   openGraph: {
-//     title: "Кошик - Yumes",
-//     description: "Перегляньте та підтвердіть ваше замовлення в кошику. Завершіть покупку з доставкою від Yumes.",
-//     type: "website",
-//   },
-// };
-
 const CartPage = () => {
   const router = useRouter()
 
@@ -150,53 +139,53 @@ const CartPage = () => {
     {
       maxLength: 50,
       ...register('name', { required: true }),
-      placeholder: 'Name',
+      placeholder: 'Імʼя',
     },
     {
       maxLength: 11,
       type: 'tel',
       ...register('phone', { required: true }),
-      placeholder: 'Phone number',
+      placeholder: 'Номер телефону',
     },
     {
       maxLength: 60,
       required: true,
       ...register('address.street', { required: true }),
-      placeholder: 'Street address',
+      placeholder: 'Вулиця',
       containerStyle: 'w-3/4',
     },
     {
       maxLength: 10,
       required: true,
       ...register('address.building', { required: true }),
-      placeholder: 'Building',
+      placeholder: 'Будинок',
       containerStyle: 'w-1/4',
     },
     {
       maxLength: 5,
       ...register('address.appart'),
-      placeholder: 'Appart./Office',
+      placeholder: 'Квартира/Офіс',
     },
     {
       maxLength: 2,
       ...register('address.floor'),
-      placeholder: 'Floor',
+      placeholder: 'Поверх',
     },
     {
       maxLength: 5,
       ...register('address.entrance'),
-      placeholder: 'Entrance',
+      placeholder: 'Під’їзд',
     },
     {
       maxLength: 10,
       ...register('address.intercom'),
-      placeholder: 'Intercom',
+      placeholder: 'Домофон',
     },
     {
       maxLength: 150,
       multiple: true,
       ...register('details'),
-      placeholder: 'Details to order',
+      placeholder: 'Коментар до замовлення',
     },
   ] satisfies InputProps[]
 
@@ -204,12 +193,12 @@ const CartPage = () => {
     {
       value: 'cash',
       ...register('payment', { required: true }),
-      label: 'Payment in cash',
+      label: 'Готівкою при отриманні',
     },
     {
       value: 'terminal',
       ...register('payment', { required: true }),
-      label: 'Payment by the terminal',
+      label: 'Оплатой по терміналу',
     },
   ] satisfies RadioButtonProps[]
 
@@ -237,15 +226,15 @@ const CartPage = () => {
         <hr className="mt-24 border-light_gray border-t-2" />
 
         <div className="flex flex-row gap-5 py-6 justify-end">
-          {discount > 0 && <Price label="Discount: " price={discount} />}
-          <Price label="Total price: " price={totalPrice} />
+          {discount > 0 && <Price label="Знижка: " price={discount} />}
+          <Price label="Загальна вартість: " price={totalPrice} />
         </div>
       </div>
 
       <div className="w-1/2 mb-auto p-[30px] shadow-md rounded-[20px] max-lg:mt-2 max-lg:w-auto ">
         <form onSubmit={onSubmitOrder}>
           <CategoryLine
-            title="Recipient data"
+            title="Дані отримувача"
             titleAlign="left"
             right={
               user
@@ -253,7 +242,7 @@ const CartPage = () => {
                 : {
                     className:
                       'text-transparent bg-clip-text bg-gradient-to-r from-dark_gray to-dark_red',
-                    title: 'Sign In',
+                    title: 'Увійти',
                     onPress: () => {
                       router.push(NAVIGATION_ROUTES.signIn)
                     },
@@ -304,7 +293,7 @@ const CartPage = () => {
 
           <CategoryLine
             className="mt-14"
-            title="Terms of payment"
+            title="Вид оплати"
             titleAlign="left"
           />
           <div className="flex flex-col mt-[30px] gap-[30px]">
@@ -318,7 +307,7 @@ const CartPage = () => {
           </div>
 
           <div className="flex flex-row justify-end">
-            <Button type="submit" label="Make order" disabled={!isValid} />
+            <Button type="submit" label="Замовити" disabled={!isValid} />
           </div>
         </form>
       </div>

@@ -50,8 +50,19 @@ async function getGroupedProducts() {
   }, []);
 }
 
+async function getProductById(id) {
+  const { rows } = await query(
+    `SELECT *, ROUND(price - (price * COALESCE(discount, 0) / 100), 2) AS selling FROM Products WHERE id = $1`,
+    [id]
+  );
+  if (rows.length === 0) {
+    return null;
+  }
+  return formatProduct(rows[0]);
+}
+
 module.exports = {
   getAllProducts,
   getGroupedProducts,
+  getProductById,
 };
-

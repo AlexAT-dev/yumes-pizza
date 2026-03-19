@@ -29,7 +29,13 @@ const Header = () => {
           </Link>
         </div>
 
-        <div className="flex flex-1 gap-5 justify-end">
+        <div className="flex flex-1 gap-5 justify-end items-center">
+          <Link href={NAVIGATION_ROUTES.about} className="text-lg font-medium hover:text-red-500 transition-colors">
+            Про нас
+          </Link>
+          <Link href={NAVIGATION_ROUTES.delivery} className="text-lg font-medium hover:text-red-500 transition-colors">
+            Доставка
+          </Link>
           <Link href={NAVIGATION_ROUTES.cart}>
               <CartButton
                 className={setNavStateStyle(pathname.includes(NAVIGATION_ROUTES.cart))}

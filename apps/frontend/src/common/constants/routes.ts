@@ -17,6 +17,8 @@ export const NAVIGATION_ROUTES = {
   cart: '/cart',
   orderCheckouted: `/cart/checkout`,
   // else
+  about: '/about',
+  delivery: '/delivery',
   notFound: '*',
 } as const
 
