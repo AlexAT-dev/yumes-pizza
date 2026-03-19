@@ -38,9 +38,9 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
                 : undefined
             }
           />
-          <div className="text-sm text-gray-600 mt-2">
+          {/*<div className="text-sm text-gray-600 mt-2">
             В наявності: {product.stock} шт.
-          </div>
+          </div>*/}
         </div>
 
         <CountButton
