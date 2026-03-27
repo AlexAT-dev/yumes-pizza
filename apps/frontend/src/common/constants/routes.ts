@@ -5,6 +5,12 @@ export const NAVIGATION_ROUTES = {
     typeof categoryId === 'string'
       ? `/category/${categoryId}`
       : `/category/:categoryId`,
+  product: (categoryId?: string, productId?: string) => {
+    if (typeof categoryId === 'string' && typeof productId === 'string') {
+      return `/${categoryId}/${productId}`
+    }
+    return `/:categoryId/:productId`
+  },
  
   // profile
   profile: '/profile',
@@ -24,6 +30,11 @@ export const NAVIGATION_ROUTES = {
 
 export type CategoryRouteParams = {
   categoryId: string
+}
+
+export type ProductRouteParams = {
+  categoryId: string
+  productId: string
 }
 
 export type OrderCheckoutedParams = {

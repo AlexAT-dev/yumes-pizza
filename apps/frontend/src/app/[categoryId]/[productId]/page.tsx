@@ -5,13 +5,14 @@ import ProductDetails from './ProductDetails'
 
 interface ProductPageProps {
   params: {
-    id: string
+    categoryId: string
+    productId: string
   }
 }
 
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
-  const { id } = await params
-  const product = await getProduct(id)
+  const { productId } = await params
+  const product = await getProduct(productId)
 
   if (!product) {
     return {
@@ -26,8 +27,8 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 }
 
 const ProductPage = async ({ params }: ProductPageProps) => {
-  const { id } = await params
-  const product = await getProduct(id)
+  const { productId } = await params
+  const product = await getProduct(productId)
 
   if (!product) {
     notFound()
@@ -59,23 +60,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
               <span className="font-semibold">Олександр</span>
               <span className="ml-2 text-yellow-500">★★★★★</span>
             </div>
-            <p className="text-gray-700">Чудовий продукт! Рекомендую всім.</p>
-          </div>
-
-          <div className="border rounded-lg p-4">
-            <div className="flex items-center mb-2">
-              <span className="font-semibold">Марія</span>
-              <span className="ml-2 text-yellow-500">★★★★☆</span>
-            </div>
-            <p className="text-gray-700">Дуже смачно, але доставка могла бути швидшою.</p>
-          </div>
-
-          <div className="border rounded-lg p-4">
-            <div className="flex items-center mb-2">
-              <span className="font-semibold">Іван</span>
-              <span className="ml-2 text-yellow-500">★★★★★</span>
-            </div>
-            <p className="text-gray-700">Відмінна якість та обслуговування!</p>
+            <p className="text-gray-700">Швидка доставка та смачна піца!</p>
           </div>
         </div>
       </div>

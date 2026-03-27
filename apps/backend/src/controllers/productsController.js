@@ -22,8 +22,8 @@ async function getGroupedProducts(req, res) {
 
 async function getProductById(req, res) {
   try {
-    const { id } = req.params;
-    const product = await productsModel.getProductById(id);
+    const { productId } = req.params;
+    const product = await productsModel.getProductById(productId);
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }

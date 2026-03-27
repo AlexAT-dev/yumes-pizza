@@ -21,7 +21,10 @@ async function getAllProducts() {
   const { rows } = await query(
     `SELECT *, ROUND(price - (price * COALESCE(discount, 0) / 100), 2) AS selling FROM Products`,
   );
-  return rows.map(formatProduct);
+  return rows.map(product => {
+    const formatted = formatProduct(product);
+    return { ...formatted, categoryId: product.id_category };
+  });
 }
 
 async function getGroupedProducts() {
@@ -58,7 +61,8 @@ async function getProductById(id) {
   if (rows.length === 0) {
     return null;
   }
-  return formatProduct(rows[0]);
+  const formatted = formatProduct(rows[0]);
+  return { ...formatted, categoryId: rows[0].id_category };
 }
 
 module.exports = {

@@ -4,6 +4,7 @@ import type { AllHTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { CountButton, type CountButtonProps } from '../molecules/buttons'
 import Link from 'next/link'
+import { NAVIGATION_ROUTES } from '@/common/constants/routes'
 
 export type ProductCardProps = Pick<
   AllHTMLAttributes<HTMLDivElement>,
@@ -17,7 +18,7 @@ export type ProductCardProps = Pick<
 
 const ProductCard = ({
   count,
-  product: { id, description, name, price, image },
+  product: { id, categoryId, description, name, price, image },
   stock,
   onAdd,
   onSub,
@@ -25,7 +26,7 @@ const ProductCard = ({
 }: ProductCardProps) => {
   return (
       <div className={twMerge('flex flex-col min-w-[230px]', className)}>
-        <Link href={`/product/${id}`}>
+        <Link href={NAVIGATION_ROUTES.product(categoryId, id)}>
         <div className="relative mb-5 max-h-[230px] rounded-[20px] overflow-hidden">
           <img className="object-cover" src={image} alt={name} />
 
