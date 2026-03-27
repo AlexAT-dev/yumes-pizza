@@ -10,7 +10,7 @@ import type {
 import type { User } from '@models/user'
 import { subMonths } from 'date-fns'
 
-export const createMockProduct = (): Product => {
+export const createMockProduct = (categoryId?: string): Product => {
   const isSale = !faker.number.int({ min: 0, max: 5 })
 
   let price: Price = {
@@ -34,6 +34,7 @@ export const createMockProduct = (): Product => {
     stock: faker.number.int({ min: 1, max: 30 }),
     price,
     description: faker.lorem.lines({ min: 1, max: 7 }),
+    categoryId: categoryId || 'burger',
   }
 }
 
@@ -49,7 +50,7 @@ export const createMockAddress = (): Address => {
 }
 
 export const createMockOrder = (): HistoryOrder => {
-  const products = faker.helpers.multiple(createMockProduct, {
+  const products = faker.helpers.multiple(() => createMockProduct(faker.helpers.arrayElement(MOCK_FOOD_CATEGORIES).id), {
     count: faker.number.int({ min: 1, max: 8 }),
   })
   const totalPrice = products.reduce((accumulator, { price }) => {
@@ -143,7 +144,7 @@ export const MOCK_NEWS = [
 export const MOCK_PRODUCT_WITH_CATEGORIES = MOCK_FOOD_CATEGORIES.map(
   category => ({
     ...category,
-    products: faker.helpers.multiple(createMockProduct, {
+    products: faker.helpers.multiple(() => createMockProduct(category.id), {
       count: faker.number.int({ min: 2, max: 12 }),
     }),
   }),
