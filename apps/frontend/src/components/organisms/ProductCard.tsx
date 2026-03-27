@@ -12,21 +12,24 @@ export type ProductCardProps = Pick<
 > &
   Pick<CountButtonProps, 'onAdd' | 'onSub'> & {
     product: Product
+    categoryId?: string
     count: number
     stock: number
   }
 
 const ProductCard = ({
   count,
-  product: { id, categoryId, description, name, price, image },
+  product: { id, categoryId: productCategoryId, description, name, price, image },
+  categoryId,
   stock,
   onAdd,
   onSub,
   className,
 }: ProductCardProps) => {
+  const finalCategoryId = categoryId || productCategoryId
   return (
       <div className={twMerge('flex flex-col min-w-[230px]', className)}>
-        <Link href={NAVIGATION_ROUTES.product(categoryId, id)}>
+        <Link href={NAVIGATION_ROUTES.product(finalCategoryId, id)}>
         <div className="relative mb-5 max-h-[230px] rounded-[20px] overflow-hidden">
           <img className="object-cover" src={image} alt={name} />
 

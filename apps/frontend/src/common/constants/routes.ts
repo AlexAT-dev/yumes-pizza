@@ -7,9 +7,9 @@ export const NAVIGATION_ROUTES = {
       : `/category/:categoryId`,
   product: (categoryId?: string, productId?: string) => {
     if (typeof categoryId === 'string' && typeof productId === 'string') {
-      return `/${categoryId}/${productId}`
+      return `/category/${categoryId}/${productId}`
     }
-    return `/:categoryId/:productId`
+    return `/category/:categoryId/:productId`
   },
  
   // profile

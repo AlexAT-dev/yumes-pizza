@@ -62,6 +62,7 @@ const ProductList = ({
                   <ProductCard
                     key={`product-${product.id}`}
                     product={product}
+                    categoryId={id}
                     count={selectedProduct?.count ?? 0}
                     stock={product.stock}
                     onAdd={() => onAddProduct(product)}
