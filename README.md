@@ -1,6 +1,17 @@
 # Yumes
 
-Yumes is an e-commerce platform built with a modern tech stack, featuring a Node.js backend and a Next.js frontend. It provides functionality for managing products, categories, orders, user authentication, news, and addresses.
+Yumes is an educational platform built with a modern tech stack, designed as a learning project for SEO optimization. It features a Node.js backend and a Next.js frontend, providing functionality for managing products, categories, orders, user authentication, news, and addresses. The project includes lab reports on semantic core development, site structure, and silo architecture for search engine optimization.
+
+## Lab reports
+
+See lab reports in [labs/](labs/) folder:
+- [Lab 1](labs/lab-01.md)
+- [Lab 2](labs/lab-02.md)
+- [Lab 3](labs/lab-03.md)
+- [Lab 4](labs/lab-04.md)
+- [Lab 5](labs/lab-05.md)
+- [Lab 6](labs/lab-06.md)
+- [Lab 7](labs/lab-07.md)
 
 ## Features
 
@@ -111,14 +122,6 @@ yumes/
 ## API Documentation
 
 The API endpoints are documented in the Postman collection file: `yumes-backend.postman_collection.json`. Import this file into Postman to explore and test the API.
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Run tests (if available)
-5. Submit a pull request
 
 ## License
 
