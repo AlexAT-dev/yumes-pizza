@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { categoryId } = await params
   const rawName = CATEGORY_NAMES[categoryId] || categoryId || 'Категорія'
   const categoryName = rawName === 'Категорія' ? rawName : `${rawName}`
-  const title = `${categoryName} у Чернівцях – замовте з доставкою | Yumes`
+  const title = `${categoryName} у Чернівцях: замовте з доставкою | Yumes`
   const description = `Замовте смачну ${categoryName.toLowerCase()} у Чернівцях з доставкою додому за 30 хвилин. Гарячі пропозиції та знижки на ${categoryName.toLowerCase()} від Yumes.`
 
   return {
