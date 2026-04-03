@@ -28,9 +28,9 @@ const CategoryLine = ({
       {titleAlign !== 'left' && <div className="flex-1" />}
 
       <div className="shrink-0 py-5">
-        <p className="text-heading2 text-dark_gray font-bold line-clamp-1">
+        <h1 className="text-heading2 text-dark_gray font-bold line-clamp-1">
           {title}
-        </p>
+        </h1>
       </div>
 
       <div className="flex flex-1 flex-row justify-end">

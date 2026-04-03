@@ -34,8 +34,35 @@ const ProductPage = async ({ params }: ProductPageProps) => {
     notFound()
   }
 
+  const productSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    image: product.image,
+    description: product.description || `Замовте ${product.name} з доставкою у Чернівцях`,
+    sku: product.id,
+    brand: {
+      '@type': 'Brand',
+      name: 'Yumes',
+    },
+    offers: {
+      '@type': 'Offer',
+      url: `https://yumes-pizza.pp.ua/category/${params.categoryId}/${params.productId}`,
+      priceCurrency: 'UAH',
+      price: product.price.selling || product.price.full,
+      availability:
+        product.stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+    },
+  }
+
   return (
-    <div className="container mx-auto px-4 py-6">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+
+      <div className="container mx-auto px-4 py-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-2">
         {/* Product Image */}
         <div className="relative flex justify-center">
@@ -65,6 +92,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
         </div>
       </div>
     </div>
+    </>
   )
 }
 

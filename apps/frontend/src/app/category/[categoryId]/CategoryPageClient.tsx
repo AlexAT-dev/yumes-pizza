@@ -50,14 +50,49 @@ const CategoryPageClient = ({ groupedProducts, categoryId }: Props) => {
     dispatch(subProduct({ productId: product.id }))
   }
 
+  const categorySchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: category.name,
+    description: `Замовте ${category.name.toLowerCase()} у Чернівцях з доставкою додому за 30 хвилин. Гарячі пропозиції та знижки від Yumes.`,
+    url: `https://yumes-pizza.pp.ua/category/${categoryId}`,
+    mainEntity: {
+      '@type': 'ItemList',
+      name: `Меню ${category.name}`,
+      numberOfItems: category.products.length,
+      itemListElement: category.products.map((product, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        item: {
+          '@type': 'Product',
+          name: product.name,
+          image: product.image,
+          offers: {
+            '@type': 'Offer',
+            price: product.price.selling || product.price.full,
+            priceCurrency: 'UAH',
+            availability: product.stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+          },
+        },
+      })),
+    },
+  }
+
   return (
-    <ProductList
-      data={[category]}
-      selectedData={cartProducts}
-      onPressMore={navigateToCategory}
-      onAddProduct={onAddProduct}
-      onSubProduct={onSubProduct}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(categorySchema) }}
+      />
+
+      <ProductList
+        data={[category]}
+        selectedData={cartProducts}
+        onPressMore={navigateToCategory}
+        onAddProduct={onAddProduct}
+        onSubProduct={onSubProduct}
+      />
+    </>
   )
 }
 

@@ -41,7 +41,7 @@ const ProductCard = ({
           )}
         </div>
 
-        <p className="mb-5 text-heading6 font-bold line-clamp-2">{name}</p>
+        <h2 className="mb-5 text-heading6 font-bold line-clamp-2">{name}</h2>
         {description?.length && (
           <p className="mb-5 text-description font-medium line-clamp-4">
             {description}

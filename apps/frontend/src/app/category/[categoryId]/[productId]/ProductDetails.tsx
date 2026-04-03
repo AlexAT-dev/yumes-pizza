@@ -25,7 +25,20 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
       <h1 className="text-3xl font-bold mb-3">{product.name}</h1>
 
       {product.description && (
+        <h2 className="text-xl font-semibold mb-2">Опис страви</h2>
+      )}
+
+      {product.description && (
         <p className="text-lg text-gray-700 mb-4">{product.description}</p>
+      )}
+
+      {product.categoryId === 'pizza' && (
+        <>
+          <h2 className="text-xl font-semibold mb-2">Інгредієнти</h2>
+          <p className="text-base text-gray-600 mb-4">
+            Свіжі інгредієнти: томатний соус, моцарела, пепероні, болгарський перець, цибуля, оливки.
+          </p>
+        </>
       )}
 
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
