@@ -54,13 +54,55 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CategoryPage({ params }: Props) {
   const { categoryId } = await params
-  
   const groupedProducts = await getGroupedProducts()
+  const category = groupedProducts.find(item => item.id === categoryId)
+
+  if (!category) {
+    return <CategoryPageClient groupedProducts={[]} categoryId={categoryId} />
+  }
+
+  const categorySchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: category.name,
+    description: `Замовте ${category.name.toLowerCase()} у Чернівцях з доставкою додому за 30 хвилин. Гарячі пропозиції та знижки на ${category.name.toLowerCase()} від Yumes.`,
+    url: `https://yumes-pizza.pp.ua/category/${categoryId}`,
+    mainEntity: {
+      '@type': 'ItemList',
+      name: `Меню ${category.name}`,
+      numberOfItems: category.products.length,
+      itemListElement: category.products.map((product, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        item: {
+          '@type': 'Product',
+          name: product.name,
+          image: product.image,
+          description: product.description ?? '',
+          sku: product.id,
+          offers: {
+            '@type': 'Offer',
+            price: product.price.selling || product.price.full,
+            priceCurrency: 'UAH',
+            availability: product.stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+            url: `https://yumes-pizza.pp.ua/category/${categoryId}/${product.id}`,
+          },
+        },
+      })),
+    },
+  }
 
   return (
-    <CategoryPageClient
-      groupedProducts={groupedProducts}
-      categoryId={categoryId}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(categorySchema) }}
+      />
+
+      <CategoryPageClient
+        groupedProducts={groupedProducts}
+        categoryId={categoryId}
+      />
+    </>
   )
 }
