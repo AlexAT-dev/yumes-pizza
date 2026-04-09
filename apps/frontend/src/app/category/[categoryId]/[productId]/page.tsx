@@ -1,7 +1,32 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getProduct } from '@/common/api/resources/products/actions'
+import { getProduct, getProductsByCategory } from '@/common/api/resources/products/actions'
+import { NAVIGATION_ROUTES } from '@/common/constants/routes'
 import ProductDetails from './ProductDetails'
+import RelatedProductsClient from './RelatedProductsClient'
+
+const CATEGORY_NAMES: Record<string, string> = {
+  pizza: 'Піца',
+  sushi: 'Суші',
+  burger: 'Бургери',
+  drinks: 'Напої',
+  fries: 'Картопля фрі',
+  sandwiches: 'Сендвічі',
+  'chicken-wings': 'Курячі крильця',
+  salads: 'Салати',
+  'chili-dogs': 'Чилі-доги',
+  'hot-dogs': 'Хот-доги',
+  wraps: 'Врапси',
+  nachos: 'Начос',
+  desserts: 'Десерти',
+  pasta: 'Паста',
+  'rice-bowls': 'Рисові боули',
+  smoothies: 'Смузі',
+  burritos: 'Буріто',
+  donuts: 'Пончики',
+  bagels: 'Бейгли',
+}
 
 interface ProductPageProps {
   params: {
@@ -11,8 +36,9 @@ interface ProductPageProps {
 }
 
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
-  const { productId } = await params
+  const { categoryId, productId } = await params
   const product = await getProduct(productId)
+  const categoryName = CATEGORY_NAMES[categoryId] || categoryId || 'Категорія'
 
   if (!product) {
     return {
@@ -23,6 +49,17 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   return {
     title: `${product.name} | Yumes`,
     description: product.description || `Замовте ${product.name} з доставкою у Чернівцях`,
+    keywords: [product.name, categoryName, 'доставка', 'їжа', 'Yumes'],
+    alternates: {
+      canonical: `https://yumes-pizza.pp.ua/category/${categoryId}/${productId}`,
+    },
+    openGraph: {
+      title: `${product.name} | Yumes`,
+      description: product.description || `Замовте ${product.name} з доставкою у Чернівцях`,
+      url: `https://yumes-pizza.pp.ua/category/${categoryId}/${productId}`,
+      type: 'product',
+      images: [product.image],
+    },
   }
 }
 
@@ -33,6 +70,15 @@ const ProductPage = async ({ params }: ProductPageProps) => {
   if (!product) {
     notFound()
   }
+
+  const products = await getProductsByCategory(product.categoryId)
+
+  const relatedProducts = products
+    .filter(item => item.id !== product.id)
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 5)
+
+  const categoryName = CATEGORY_NAMES[params.categoryId] || params.categoryId || 'Категорія'
 
   const productSchema = {
     '@context': 'https://schema.org',
@@ -55,14 +101,58 @@ const ProductPage = async ({ params }: ProductPageProps) => {
     },
   }
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Головна',
+        item: 'https://yumes-pizza.pp.ua/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: categoryName,
+        item: `https://yumes-pizza.pp.ua${NAVIGATION_ROUTES.category(params.categoryId)}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: product.name,
+        item: `https://yumes-pizza.pp.ua/category/${params.categoryId}/${params.productId}`,
+      },
+    ],
+  }
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
 
       <div className="container mx-auto px-4 py-6">
+        <nav className="mb-6 text-sm text-gray-600">
+          <Link href={NAVIGATION_ROUTES.home} className="hover:text-dark_red">
+            Головна
+          </Link>
+          <span className="mx-2">/</span>
+          <Link
+            href={NAVIGATION_ROUTES.category(params.categoryId)}
+            className="hover:text-dark_red"
+          >
+            {categoryName}
+          </Link>
+          <span className="mx-2">/</span>
+          <span className="font-semibold text-dark_gray">{product.name}</span>
+        </nav>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-2">
         {/* Product Image */}
         <div className="relative flex justify-center">
@@ -76,6 +166,13 @@ const ProductPage = async ({ params }: ProductPageProps) => {
         {/* Product Details */}
         <ProductDetails product={product} />
       </div>
+
+      {relatedProducts.length > 0 && (
+        <RelatedProductsClient
+          products={relatedProducts}
+          categoryId={product.categoryId}
+        />
+      )}
 
       {/* Reviews Section */}
       <div className="mt-12">

@@ -15,3 +15,10 @@ export const getProduct = async (id: string): Promise<Product | null> => {
     return null
   }
 }
+
+export const getProductsByCategory = async (
+  categoryId: string,
+): Promise<Product[]> => {
+  const products = await getProducts()
+  return products.filter(product => product.categoryId === categoryId)
+}
