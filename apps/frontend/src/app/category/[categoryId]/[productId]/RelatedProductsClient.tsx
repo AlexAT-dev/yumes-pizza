@@ -49,6 +49,7 @@ const RelatedProductsClient = ({ products, categoryId }: RelatedProductsClientPr
                 onAdd={() => onAddProduct(product)}
                 onSub={() => onSubProduct(product)}
               />
+            <br />
             </div>
           )
         })}
