@@ -41,7 +41,7 @@ VALUES
     ('bbq-chicken-pizza', 'BBQ Куряча Піца', 'bbq_chicken_pizza.webp', 17, 'Грильована курка, BBQ соус, червона цибуля та моцарела', 339.99, 5, 'pizza'),
     ('supreme-pizza', 'Супрім Піца', 'supreme_pizza.webp', 14, 'Пепероні, ковбаса, болгарський перець, цибуля, оливки, томатний соус та моцарела', 359.99, NULL, 'pizza'),
     ('mushroom-pizza', 'Грибна Піца', 'mushroom_pizza.webp', 16, 'Смажені гриби з томатним соусом та моцарелою', 269.99, NULL, 'pizza'),
-    ('four-cheese-pizza', 'Чотири Сири Піца', 'four_cheese_pizza.webp', 13, 'Моцарела, чеддер, проволоне та пармезан з томатним соусом', 319.99, NULL, 'pizza'),
+    ('four-cheese-pizza', 'Пепероні Піца', 'pepperoni_pizza.webp', 13, 'Томатний соус, моцарела та скибочки пепероні', 299.99, NULL, 'pizza'),
     ('buffalo-chicken-pizza', 'Баффало Куряча Піца', 'buffalo_chicken_pizza.webp', 15, 'Баффало курка, ранчова заправка, червона цибуля та моцарела', 339.99, NULL, 'pizza'),
     ('spinach-feta-pizza', 'Шпинат та Фета Піца', 'spinach_feta_pizza.webp', 16, 'Свіжий шпинат, сир фета, томатний соус та моцарела', 299.99, 5, 'pizza'),
     ('meat-lovers-pizza', 'М''ясна Піца', 'meat_lovers_pizza.webp', 14, 'Пепероні, ковбаса, шинка, бекон, томатний соус та моцарела', 359.99, NULL, 'pizza'),

@@ -1,7 +1,11 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { getProduct } from '@/common/api/resources/products/actions'
+import { getProduct, getProductsByCategory } from '@/common/api/resources/products/actions'
+import { getGroupedProducts } from '@/common/api/resources/groupedProducts/actions'
+import { NAVIGATION_ROUTES } from '@/common/constants/routes'
+import CategoryBreadcrumb from '@components/organisms/CategoryBreadcrumb'
 import ProductDetails from './ProductDetails'
+import RelatedProductsClient from './RelatedProductsClient'
 
 interface ProductPageProps {
   params: {
@@ -11,7 +15,10 @@ interface ProductPageProps {
 }
 
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
-  const { productId } = await params
+  const { categoryId, productId } = await params
+  const groupedProducts = await getGroupedProducts()
+  const category = groupedProducts.find(item => item.id === categoryId)
+  const categoryName = category?.name || categoryId || 'Категорія'
   const product = await getProduct(productId)
 
   if (!product) {
@@ -23,16 +30,37 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   return {
     title: `${product.name} | Yumes`,
     description: product.description || `Замовте ${product.name} з доставкою у Чернівцях`,
+    keywords: [product.name, categoryName, 'доставка', 'їжа', 'Yumes'],
+    alternates: {
+      canonical: `https://yumes-pizza.pp.ua/category/${categoryId}/${productId}`,
+    },
+    openGraph: {
+      title: `${product.name} | Yumes`,
+      description: product.description || `Замовте ${product.name} з доставкою у Чернівцях`,
+      url: `https://yumes-pizza.pp.ua/category/${categoryId}/${productId}`,
+      type: 'website',
+      images: [product.image],
+    },
   }
 }
 
 const ProductPage = async ({ params }: ProductPageProps) => {
-  const { productId } = await params
+  const { categoryId, productId } = await params
+  const groupedProducts = await getGroupedProducts()
+  const category = groupedProducts.find(item => item.id === categoryId)
+  const categoryName = category?.name || categoryId || 'Категорія'
   const product = await getProduct(productId)
 
   if (!product) {
     notFound()
   }
+
+  const products = await getProductsByCategory(product.categoryId)
+
+  const relatedProducts = products
+    .filter(item => item.id !== product.id)
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 5)
 
   const productSchema = {
     '@context': 'https://schema.org',
@@ -47,12 +75,37 @@ const ProductPage = async ({ params }: ProductPageProps) => {
     },
     offers: {
       '@type': 'Offer',
-      url: `https://yumes-pizza.pp.ua/category/${params.categoryId}/${params.productId}`,
+      url: `https://yumes-pizza.pp.ua/category/${categoryId}/${productId}`,
       priceCurrency: 'UAH',
       price: product.price.selling || product.price.full,
       availability:
         product.stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
     },
+  }
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Головна',
+        item: 'https://yumes-pizza.pp.ua/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: categoryName,
+        item: `https://yumes-pizza.pp.ua${NAVIGATION_ROUTES.category(categoryId)}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: product.name,
+        item: `https://yumes-pizza.pp.ua/category/${categoryId}/${productId}`,
+      },
+    ],
   }
 
   return (
@@ -61,8 +114,17 @@ const ProductPage = async ({ params }: ProductPageProps) => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
 
-      <div className="container mx-auto px-4 py-6">
+      <CategoryBreadcrumb
+        categoryId={categoryId}
+        categoryName={categoryName}
+        productName={product.name}
+      />
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-2">
         {/* Product Image */}
         <div className="relative flex justify-center">
@@ -91,7 +153,13 @@ const ProductPage = async ({ params }: ProductPageProps) => {
           </div>
         </div>
       </div>
-    </div>
+
+      {relatedProducts.length > 0 && (
+        <RelatedProductsClient
+          products={relatedProducts}
+          categoryId={product.categoryId}
+        />
+      )}
     </>
   )
 }

@@ -1,6 +1,19 @@
-# Звіт з лабораторної роботи №5
-**Тема:** Внутрішня перелінковка  
-**Проєкт:** Yumes Pizza (Замовлення піци, суші, бургерів та іншої їжі)
+# Звіт: Лабораторна робота №5. Внутрішня перелінковка
+
+---
+
+## Мета
+
+Навчитись аудитувати внутрішню перелінковку сайту, виявляти типові помилки (orphan pages, надлишкові посилання,
+неправильні анкори), будувати схему перелінковки відповідно до silo-структури та впроваджувати виправлення безпосередньо
+у проект.
+
+---
+
+## Команда:
+- Атвіновський Олексій: DevOps, TeamLead
+- Довгаль Кирило: Frontend Dev
+- Оршовський Сергій: Backend Dev
 
 ---
 
@@ -15,31 +28,27 @@
 | `/category/pizza` | Категорія | Піца | 4 | 12 | `linked` |
 | `/category/sushi` | Категорія | Суші | 4 | 10 | `linked` |
 | `/category/burgers`| Категорія | Бургери | 4 | 8 | `linked` |
-| `/category/pizza/4-syry`| Товар | Піца 4 сири | 2 | 5 | `nav-only` |
+| `/category/pizza/pepperoni`| Товар | Піца Пепероні | 2 | 5 | `nav-only` |
 | `/about` | Статична | Про нас | 1 (Footer) | 2 | `linked` |
 
 ### 1.2 - Виявлення orphan pages
-Під час перевірки за допомогою `grep` та аналізу файлів проекту було виявлено:
-* **Сторінка:** `/category/pizza/special-offer-spring` (сезонна акція).
-* **Проблема:** На цю сторінку немає посилань ні з головної, ні з категорій. Вона доступна лише за прямим посиланням.
-* **Статус:** `orphan`.
-* **Рішення:** Додати банер на головну сторінку в секцію "Акції".
+Orphan pages відсутні
 
 ### 1.3 - Аналіз анкорів
-*Аналіз 5 вихідних посилань зі сторінки товару "Піца 4 сири".*
+*Аналіз 5 вихідних посилань зі сторінки товару "Піца Пепероні".*
 
 | Сторінка-джерело | Анкор текст | URL призначення | Тип анкору | Оцінка |
 | :--- | :--- | :--- | :--- | :--- |
-| `/4-syry` | "тут" | `/delivery` | `generic` | ❌ |
-| `/4-syry` | "Піца" | `/category/pizza` | `breadcrumb` | ✅ |
-| `/4-syry` | "спробуйте наші суші" | `/category/sushi` | `descriptive` | ✅ |
-| `/4-syry` | "https://yumes.ua/b..." | `/category/burgers` | `naked URL` | ❌ |
-| `/4-syry` | "Пепероні" | `/category/pizza/pepperoni` | `partial-match`| ✅ |
+| `/category/pizza/pepperoni` | "тут" | `/delivery` | `generic` | ❌ |
+| `/category/pizza/pepperoni` | "Піца" | `/category/pizza` | `breadcrumb` | ✅ |
+| `/category/pizza/pepperoni` | "спробуйте наші суші" | `/category/sushi` | `descriptive` | ✅ |
+| `/category/pizza/pepperoni` | "https://yumes.ua/b..." | `/category/burgers` | `naked URL` | ❌ |
+| `/category/pizza/pepperoni` | "Пепероні" | `/category/pizza/pepperoni` | `partial-match`| ✅ |
 
 ### 1.4 - Перевірка глибини кліків
 | Сторінка | Шлях від головної | Кількість кліків | Статус |
 | :--- | :--- | :--- | :--- |
-| `/category/pizza/4-syry` | `/` → `/category/pizza` → `/4-syry` | 2 | ✅ |
+| `/category/pizza/pepperoni` | `/` → `/category/pizza` → `/category/pizza/pepperoni` | 2 | ✅ |
 | `/category/sushi/philadelphia` | `/` → `/category/sushi` → `/philadelphia` | 2 | ✅ |
 | `/contacts` | `/` → `Footer` → `/contacts` | 1 | ✅ |
 
@@ -67,21 +76,25 @@
 | Звідки (URL) | Куди (URL) | Анкор текст | Тип посилання | Розміщення |
 | :--- | :--- | :--- | :--- | :--- |
 | `/` | `/category/pizza` | Замовити піцу | `nav` | Header |
-| `/category/pizza` | `/category/pizza/4-syry` | Піца Чотири Сири | `contextual` | Card |
-| `/category/pizza/4-syry` | `/category/pizza` | Піца | `breadcrumb` | Breadcrumbs |
-| `/category/pizza/4-syry` | `/category/pizza/margarita` | Класична Маргарита | `related` | Sidebar |
-| `/category/pizza/4-syry` | `/category/burgers` | Переглянути бургери | `contextual` | Body text |
+| `/category/pizza` | `/category/pizza/pepperoni` | Піца Пепероні | `contextual` | Card |
+| `/category/pizza/pepperoni` | `/category/pizza` | Піца | `breadcrumb` | Breadcrumbs |
+| `/category/pizza/pepperoni` | `/category/pizza/margarita` | Класична Маргарита | `related` | Sidebar |
+| `/category/pizza/pepperoni` | `/category/burgers` | Переглянути бургери | `contextual` | Body text |
 
 ### 2.3 - Впровадження блоку пов'язаних товарів
-На сторінках товарів впроваджено блок **"Схожі страви"**, який фільтрує товари за категорією:
+На сторінках товарів впроваджено блок **"Схожі страви"**, який фільтрує товари за категорією та показує 5 випадкових пропозицій:
 ```javascript
 // Логіка підбору (псевдокод)
-const related = products.filter(p => p.category === current.category && p.id !== current.id).slice(0, 3);
+const related = products
+  .filter(p => p.category === current.category && p.id !== current.id)
+  .sort(() => Math.random() - 0.5)
+  .slice(0, 5);
+```
 
 2.4 - Впровадження Breadcrumbs
 Додано навігаційний ланцюжок:
 
-Головна → Піца → Піца 4 сири
+Головна → Піца → Піца Пепероні
 
 №,Проблема,Тип,Що зроблено
 1,Orphan Page,orphan,Додано посилання на сезонну акцію в Navigation Menu та Footer.

@@ -1,11 +1,11 @@
-import CategorySection from "@components/templates/CategorySection";
+import CategorySection from '@components/templates/CategorySection'
 
-const CategoryLayout = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <CategorySection>
-      {children}
-    </CategorySection>
-  );
+type Props = {
+  children: React.ReactNode
 }
 
-export default CategoryLayout;
+const CategoryLayout = ({ children }: Props) => {
+  return <CategorySection>{children}</CategorySection>
+}
+
+export default CategoryLayout
