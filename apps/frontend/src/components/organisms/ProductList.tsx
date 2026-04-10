@@ -45,7 +45,7 @@ const ProductList = ({
               right={
                 shownMoreButton
                   ? {
-                      title: 'more...',
+                      title: 'Переглянути всі',
                       onPress: () => onPressMore?.(id),
                     }
                   : undefined

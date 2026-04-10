@@ -22,11 +22,17 @@ const Header = () => {
         <div className="flex-1 max-lg:hidden" />
 
         <div className="shrink-0 justify-center">
-          <Link href={NAVIGATION_ROUTES.home}>
-            <h1 className="text-5xl text-dark_gray ease-out duration-300 hover:scale-110">
+          {pathname === NAVIGATION_ROUTES.home ? (
+            <h1 className="text-5xl text-dark_gray ease-out duration-300">
               Yumes Pizza
             </h1>
-          </Link>
+          ) : (
+            <Link href={NAVIGATION_ROUTES.home}>
+              <h1 className="text-5xl text-dark_gray ease-out duration-300 hover:scale-110">
+                Yumes Pizza
+              </h1>
+            </Link>
+          )}
         </div>
 
         <div className="flex flex-1 gap-5 justify-end items-center">
