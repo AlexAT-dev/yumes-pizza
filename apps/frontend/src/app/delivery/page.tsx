@@ -17,6 +17,9 @@ export const metadata: Metadata = {
       "Дізнайтеся умови доставки, час та способи оплати Yumes Pizza у Чернівцях.",
     type: "website",
   },
+  alternates: {
+    canonical: 'https://yumes-pizza.pp.ua/delivery',
+  },
 }
 
 export default function DeliveryPage() {
