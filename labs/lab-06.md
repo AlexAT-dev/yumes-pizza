@@ -116,10 +116,6 @@ https://docs.google.com/spreadsheets/d/15bsU9EAgixWIc0qaQEIXiHI2kULNqu8YYfdaQsSI
 | 4xx/5xx та redirect chains | Локальний код-аудит маршрутизації | Критичних chain в коді не виявлено |
 | Schema.org | Перевірка JSON-LD блоків | Виправлено некоректний URL в About schema |
 
-Backlog:
-- перевірка `http -> https` і `www/non-www` редіректів на сервері/інфраструктурі;
-- live-перевірка в GSC та Rich Results Test після деплою.
-
 ---
 
 ## 3. Аналіз швидкості (Baseline)
