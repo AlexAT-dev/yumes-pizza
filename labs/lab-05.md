@@ -145,10 +145,14 @@ curl https://yumes-pizza.pp.ua/ | grep /category/pizza/pepperoni-pizza
 ### 2.3 - Впровадження блоку пов'язаних товарів
 На сторінках товарів впроваджено блок **"Схожі страви"**, який фільтрує товари за категорією та показує 5 випадкових пропозицій
 
+![alt text](lab5/3.jpg)
+
 ### 2.4 - Впровадження Breadcrumbs
 Додано навігаційний ланцюжок:
 
 Головна → Піца → Піца Пепероні
+
+![alt text](lab5/2.jpg)
 
 ---
 
@@ -160,11 +164,26 @@ curl https://yumes-pizza.pp.ua/ | grep /category/pizza/pepperoni-pizza
 |---|----------|-----|-------------|-------------------|
 | 1 | Посилання на себе (лого посилається з / на /) | Посилання на себе | Додано логіка в Header компонент для вимкнення посилання лого при наявності сторінки попереднього історії або прямого доступу на `/` — текст як `<span>` замість `<Link>` коли вже на головній | `src/components/molecules/Header.tsx`, `src/components/atoms/Logo.tsx` |
 | 2 | Посилання на себе (категорія посилається сама на себе в breadcrumbs) | Посилання на себе | Додано `CategoryBreadcrumb` компонент з флагом `isCurrentCategory={true}`, який виключає посилання на активну категорію та виводить текст як `<span>` замість `<Link>` | `src/components/organisms/CategoryBreadcrumb.tsx`, `src/app/category/[categoryId]/page.tsx` (line 47) |
-| 3 | Низька горизонтальна перелінковка всередину силосу (відсутні зв'язки між товарами категорії) | Перелінковка | Впроваджено блок **"Схожі страви"** з 5 випадковими товарами тієї самої категорії, використовуючи компонент `RelatedProductsClient` для горизонтальної перелінковки | `src/app/category/[categoryId]/[productId]/page.tsx` (line 52+), `src/components/organisms/RelatedProductsClient.tsx` |
-| 4 | Відсутня структурна навігація на сторінках товарів (неправильна глибина кліків, відсутні breadcrumbs) | Глибина / Навігація | Додано навігаційний ланцюжок `CategoryBreadcrumb` з JSON-LD BreadcrumbList schema для SEO на сторінках товарів — структура: "Головна → Категорія → Товар" (глибина = 2 клік) | `src/app/category/[categoryId]/[productId]/page.tsx` (line 50), JSON-LD schema (line 60+) |
+| 3 | Відсутня структурна навігація на сторінках товарів (неправильна глибина кліків, відсутні breadcrumbs) | Глибина / Навігація | Додано навігаційний ланцюжок `CategoryBreadcrumb` з JSON-LD BreadcrumbList schema для SEO на сторінках товарів — структура: "Головна → Категорія → Товар" (глибина = 2 клік) | `src/app/category/[categoryId]/[productId]/page.tsx` (line 50), JSON-LD schema (line 60+) |
+| 4 | Низька горизонтальна перелінковка всередину силосу (відсутні зв'язки між товарами категорії) | Перелінковка | Впроваджено блок **"Схожі страви"** з 5 випадковими товарами тієї самої категорії, використовуючи компонент `RelatedProductsClient` для горизонтальної перелінковки | `src/app/category/[categoryId]/[productId]/page.tsx` (line 52+), `src/components/organisms/RelatedProductsClient.tsx` |
+
+До:
 
 ![alt text](lab5/1before.jpg)
 
+Після:
+
 ![alt text](lab5/1after.jpg)
 
+До:
+
+![alt text](lab5/2before.jpg)
+
+Після:
+
 ![alt text](lab5/2.jpg)
+
+
+![alt text](lab5/3.jpg)
+
+
