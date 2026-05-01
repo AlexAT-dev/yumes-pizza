@@ -224,28 +224,40 @@ Backlog:
 
 ### 6.1 Backlink Gap (20 prospects)
 
+## 6.1 Backlink Gap (20 prospects)
+
 | Донорський домен | Є у конкурента 1 | Є у конкурента 2 | Є у конкурента 3 | Є у нас | Пріоритет |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `chernivtsi.media` | Так | Так | Ні | Ні | High |
-| `foodblog.ua` | Так | Ні | Так | Ні | High |
-| `cityevents.cv.ua` | Так | Так | Так | Ні | High |
-| `rest-map.ua` | Так | Так | Так | Ні | High |
-| `localcity.guide` | Так | Так | Ні | Ні | High |
-| `taste.blog` | Ні | Так | Так | Ні | Med |
-| `streetfood.blog` | Ні | Так | Так | Ні | Med |
-| `couponhub.ua` | Так | Так | Так | Ні | Med |
-| `reviews-ua.net` | Так | Ні | Так | Ні | Med |
-| `forum.cv.ua` | Так | Так | Ні | Ні | Low |
-| `partner-news.ua` | Ні | Так | Так | Ні | Med |
-| `city-guide.ua` | Так | Ні | Так | Ні | Med |
-| `geo-listing.ua` | Так | Так | Так | Ні | Med |
-| `ukr-food.media` | Ні | Так | Ні | Ні | Low |
-| `delivery-rating.ua` | Так | Так | Ні | Ні | Med |
-| `chernivtsi-bloggers.com` | Ні | Так | Так | Ні | Med |
-| `eat-local.ua` | Так | Ні | Ні | Ні | Low |
-| `dine-review.ua` | Ні | Так | Так | Ні | Med |
-| `cv-business.news` | Так | Ні | Так | Ні | Med |
-| `restaurant-hub.ua` | Так | Так | Так | Ні | High |
+| `misteram.com.ua` | Так | Так | Ні | Ні | **High** |
+| `zakaz.ua` | Так | Так | Так | Ні | **High** |
+| `glovoapp.com` | Так | Так | Так | Ні | **High** |
+| `horeca-ukraine.com` | Так | Так | Ні | Ні | **High** |
+| `0372.ua` | Так | Так | Так | Ні | **High** |
+| `ratelist.top` | Так | Так | Ні | Ні | **High** |
+| `top20.ua` | Так | Ні | Так | Ні | **Med** |
+| `village.com.ua` | Ні | Так | Так | Ні | **Med** |
+| `list.in.ua` | Так | Так | Так | Ні | **Med** |
+| `bestrest.com.ua` | Так | Ні | Так | Ні | **Med** |
+| `uba.top` | Ні | Так | Так | Ні | **Med** |
+| `tripadvisor.com` | Так | Так | Так | Ні | **Med** |
+| `2gis.ua` | Так | Так | Ні | Ні | **Med** |
+| `otzyvua.net` | Так | Ні | Так | Ні | **Med** |
+| `hotels24.ua` | Ні | Так | Так | Ні | **Med** |
+| `abiznes.com.ua` | Так | Ні | Так | Ні | **Med** |
+| `prom.ua` | Так | Так | Ні | Ні | **Med** |
+| `businessviews.com.ua` | Ні | Так | Так | Ні | **Low** |
+| `loko.delivery` | Так | Ні | Ні | Ні | **Low** |
+| `smartinfo.com.ua` | Ні | Так | Ні | Ні | **Low** |
+
+---
+
+**Примітки щодо доменів:**
+
+**High-пріоритет:** `misteram.com.ua` та `zakaz.ua` — агрегатори доставки їжі, що прямо релевантні ніші; `glovoapp.com` — найбільший гравець ринку з величезним DA; `horeca-ukraine.com` — галузеве медіа для ресторанного бізнесу; `0372.ua` та `ratelist.top` — чернівецькі міські каталоги з категорією доставки їжі.
+
+**Med-пріоритет:** Міксовані майданчики — локальні рейтингові сайти (`top20.ua`, `bestrest.com.ua`), медіа про їжу/ресторани (`village.com.ua`, `uba.top`), бізнес-каталоги (`list.in.ua`, `prom.ua`), відгукові платформи (`tripadvisor.com`, `otzyvua.net`, `2gis.ua`).
+
+**Low-пріоритет:** Сайти з меншим трафіком або непрямою релевантністю до піци/доставки.
 
 ### 6.2 30-денний план зовнішньої оптимізації
 
