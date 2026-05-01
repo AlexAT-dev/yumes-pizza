@@ -11,6 +11,27 @@ const svgrLoader = {
 const nextConfig: NextConfig = {
   reactStrictMode: false,
   serverExternalPackages: ["yjs"],
+  images: {
+    formats: ['image/avif', 'image/webp'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'yumes-pizza-backend-production.up.railway.app',
+        pathname: '/api/image/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'yumes-pizza.pp.ua',
+        pathname: '/api/image/**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '3001',
+        pathname: '/api/image/**',
+      },
+    ],
+  },
   turbopack: {
     resolveExtensions: [".mdx", ".tsx", ".ts", ".jsx", ".js", ".mjs", ".json"],
     rules: {
@@ -71,6 +92,24 @@ const nextConfig: NextConfig = {
           //     "upgrade-insecure-requests",
           //   ].join("; "),
           // },
+        ],
+      },
+      {
+        source: '/_next/static/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/api/image/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, stale-while-revalidate=604800',
+          },
         ],
       },
     ];

@@ -18,6 +18,9 @@ export const metadata: Metadata = {
       "Сервіс доставки піци, суші та бургерів у Чернівцях. Свіжі інгредієнти та швидка доставка.",
     type: "website",
   },
+  alternates: {
+    canonical: 'https://yumes-pizza.pp.ua/about',
+  },
 }
 
 export default function AboutPage() {
@@ -32,7 +35,7 @@ export default function AboutPage() {
             "@context": "https://schema.org",
             "@type": "Restaurant",
             name: "Yumes Pizza",
-            url: "https://yumes.com",
+            url: "https://yumes-pizza.pp.ua/about",
             servesCuisine: ["Pizza", "Sushi", "Burgers"],
             priceRange: "$$",
             address: {

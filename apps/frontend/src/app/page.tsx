@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: "Головна | Yumes",
   description:
     "Yumes — доставка їжі у Чернівцях. Замовляйте піцу, бургери, суші та інші страви з швидкою доставкою додому або в офіс.",
+  alternates: {
+    canonical: 'https://yumes-pizza.pp.ua/',
+  },
 };
 
 const  HomePage = async() => {

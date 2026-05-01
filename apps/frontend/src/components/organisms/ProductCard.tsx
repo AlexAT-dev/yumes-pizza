@@ -4,6 +4,7 @@ import type { AllHTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { CountButton, type CountButtonProps } from '../molecules/buttons'
 import Link from 'next/link'
+import Image from 'next/image'
 import { NAVIGATION_ROUTES } from '@/common/constants/routes'
 
 export type ProductCardProps = Pick<
@@ -31,7 +32,16 @@ const ProductCard = ({
       <div className={twMerge('flex flex-col min-w-[230px]', className)}>
         <Link href={NAVIGATION_ROUTES.product(finalCategoryId, id)}>
         <div className="relative mb-5 max-h-[230px] rounded-[20px] overflow-hidden">
-          <img className="object-cover" src={image} alt={name} />
+          <Image
+            className="object-cover"
+            src={image}
+            alt={name}
+            width={230}
+            height={230}
+            loading="lazy"
+            sizes="(max-width: 768px) 45vw, 230px"
+            unoptimized
+          />
 
           {price.discount && (
             <SaleTag

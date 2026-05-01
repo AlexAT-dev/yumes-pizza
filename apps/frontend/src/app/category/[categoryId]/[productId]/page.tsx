@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import Image from 'next/image'
 import { getProduct, getProductsByCategory } from '@/common/api/resources/products/actions'
 import { getGroupedProducts } from '@/common/api/resources/groupedProducts/actions'
 import { NAVIGATION_ROUTES } from '@/common/constants/routes'
@@ -128,10 +129,15 @@ const ProductPage = async ({ params }: ProductPageProps) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-2">
         {/* Product Image */}
         <div className="relative flex justify-center">
-          <img
+          <Image
             src={product.image}
             alt={product.name}
+            width={300}
+            height={300}
+            priority
+            sizes="(max-width: 768px) 280px, 300px"
             className="w-[300px] h-[300px] rounded-lg object-cover"
+            unoptimized
           />
         </div>
 
