@@ -40,6 +40,7 @@ const ProductCard = ({
             height={230}
             loading="lazy"
             sizes="(max-width: 768px) 45vw, 230px"
+            unoptimized
           />
 
           {price.discount && (

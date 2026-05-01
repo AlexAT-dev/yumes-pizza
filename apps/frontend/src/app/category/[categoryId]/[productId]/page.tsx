@@ -137,6 +137,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
             priority
             sizes="(max-width: 768px) 280px, 300px"
             className="w-[300px] h-[300px] rounded-lg object-cover"
+            unoptimized
           />
         </div>
 
